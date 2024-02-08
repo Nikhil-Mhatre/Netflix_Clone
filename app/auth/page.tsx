@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { FcGoogle } from "react-icons/fc"
 import { AiOutlineGithub } from "react-icons/ai";
+import { signIn } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
 
 
 interface FormItem {
@@ -57,7 +59,8 @@ function SignUpPage() {
 
 const FormContainer = () => {
     const [toogleAuth, setToggleAuth] = useState('signin')
-
+    const searchParams = useSearchParams()
+    const callbackUrl = searchParams.get('callbackUrl') || ''
 
     const form = useForm<z.infer<typeof SignupFormSchema>>({
         resolver: zodResolver(toogleAuth === 'signin' ? SigninFormSchema : SignupFormSchema),
@@ -119,8 +122,12 @@ const FormContainer = () => {
             </Form>
             {/* oAuth Actions Btns */}
             <div className='flex gap-4 md:justify-center'>
-                <FcGoogle className='cursor-pointer' size={40} />
-                <AiOutlineGithub className='cursor-pointer' size={40} />
+                <FcGoogle
+                    onClick={() => signIn('google', { callbackUrl })}
+                    className='cursor-pointer' size={40} />
+                <AiOutlineGithub
+                    onClick={() => signIn('github', { callbackUrl })}
+                    className='cursor-pointer' size={40} />
             </div>
             <p className='text-xl lg:text-lg font-light'>
                 {toogleAuth === 'signin' ? "Don't have Account? " : 'Already have Account? '}
