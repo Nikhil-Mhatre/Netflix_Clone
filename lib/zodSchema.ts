@@ -7,7 +7,7 @@ const SignupFormSchema = z.object({
     username: z
         .string()
         .min(1, { message: "Required Username!" })
-        .max(10),
+        .max(30),
     email: z
         .string()
         .min(1, { message: "Required Email!" })

@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      boxShadow: {
+        'autocomplete-bgColor': '0 0 0px 1000px #3b62b8 ',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
