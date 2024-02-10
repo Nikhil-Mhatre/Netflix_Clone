@@ -1,8 +1,7 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+
 import { IoIosArrowForward } from "react-icons/io";
 import { MdFileDownload } from "react-icons/md";
 import {
@@ -12,21 +11,24 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FAQITEMS, HomeFooterLinks } from "@/lib/contants";
+import { checkEmailExistenceAction } from "./_actions";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 
+type Val = { value: never };
 export default function Home() {
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect("/auth?callbackUrl=/");
-    },
-  });
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter()
 
-  if (!session)
-    return (
-      <div className="flex h-full flex-col items-center justify-center gap-4">
-        <h1>UnAuthorized</h1>
-      </div>
-    );
+  
+
+  const emailCheckHandler = async () => {
+    if (emailRef?.current?.value) {
+      const response = await checkEmailExistenceAction(emailRef.current.value);
+      if (!response) return router.push('/auth?value=signup')
+      return router.push('/auth?value=signin')
+    }
+  };
 
   return (
     <main className="h-full scroll-smooth">
@@ -88,6 +90,7 @@ export default function Home() {
               >
                 <div className="relative w-full">
                   <input
+                    ref={emailRef}
                     type="text"
                     id="hero-email"
                     placeholder=" "
@@ -105,7 +108,8 @@ export default function Home() {
                   </label>
                 </div>
                 <Link
-                  href={"/auth"}
+                  onClick={emailCheckHandler}
+                  href={"#"}
                   className="flex items-center gap-2 rounded-lg
                 bg-red-700 px-2 py-3 font-bold tracking-wider text-white md:py-4 md:text-lg"
                 >
