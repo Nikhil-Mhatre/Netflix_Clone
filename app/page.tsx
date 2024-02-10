@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { IoIosArrowForward } from "react-icons/io";
+import { MdFileDownload } from "react-icons/md";
 import {
   Accordion,
   AccordionContent,
@@ -28,14 +29,14 @@ export default function Home() {
     );
 
   return (
-    <main className="scroll-smooth h-full">
+    <main className="h-full scroll-smooth">
       {/* Hero Section */}
       <section className="w-auto bg-black text-xs md:h-4/6 lg:h-full">
         <div
           className="h-full bg-[url(../public/images/hero.jpg)]
         bg-cover bg-no-repeat"
         >
-          <div className="h-full bg-black opacity-70">
+          <div className="h-full bg-black bg-opacity-60">
             {/* Navbar */}
             <nav className="flex h-24 w-full items-center justify-around md:justify-around lg:justify-between lg:px-16">
               <img
@@ -133,15 +134,31 @@ export default function Home() {
             players and more.
           </p>
         </div>
-        <div>
-          <img src="/images/home/home-tv-img.png" alt="" />
+        <div className="relative z-10">
+          <div
+            className="absolute left-12 top-16 -z-10
+          md:left-20 md:top-24 lg:left-14 lg:top-16"
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              src="/images/home/home-tv-video.m4v"
+            />
+          </div>
+          <img
+            src="/images/home/home-tv-img.png"
+            alt="home-tv"
+            className="opacity-90"
+          />
         </div>
       </section>
       <div className="h-2 w-full bg-gray-500 " />
       {/* Download show section */}
       <section
         className="flex flex-col items-center justify-center bg-black
-       text-white lg:h-full lg:flex-row-reverse lg:px-32"
+       py-12 text-white lg:h-full lg:flex-row-reverse lg:px-32"
       >
         <div
           className="flex flex-col items-center justify-center gap-6 p-12
@@ -154,8 +171,23 @@ export default function Home() {
             Save your favourites easily and always have something to watch.
           </p>
         </div>
-        <div>
+        <div className="flex flex-col items-center justify-center">
           <img src="/images/home/home-download-img.jpg" alt="" />
+          <div
+            className="text flex items-center justify-center gap-4
+          rounded-lg border-2 border-gray-500 px-6 py-2"
+          >
+            <img
+              className="h-full w-10"
+              src="/images/home/home-download-st-img.png"
+              alt=""
+            />
+            <p className="flex flex-col items-start justify-center">
+              <span className="font-bold">Stranger Things</span>
+              <span className="text-sm text-blue-500">Dowloading</span>
+            </p>
+            <MdFileDownload className="text-blue-600" size={30} />
+          </div>
         </div>
       </section>
       <div className="h-2 w-full bg-gray-500 " />
@@ -174,8 +206,20 @@ export default function Home() {
             and TV.
           </p>
         </div>
-        <div>
-          <img src="/images/home/home-watch-img.png" alt="" />
+        <div className="relative z-10">
+          <div
+            className="absolute left-32 top-10 -z-10 w-6/12
+          md:left-36 md:top-16 md:w-7/12 lg:left-24 lg:top-11"
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              src="/images/home/home-watch-video.m4v"
+            />
+          </div>
+          <img src="/images/home/home-watch-img.png" alt="home-tv" />
         </div>
       </section>
       <div className="h-2 w-full bg-gray-500 " />
@@ -212,9 +256,10 @@ export default function Home() {
         <FaqAccordian />
       </section>
       <div className="h-2 w-full bg-gray-500 " />
+      {/* Footer */}
       <footer className="flex flex-col justify-center gap-4 bg-black p-12">
         <h2>Questions? Call 000-800-919-1694</h2>
-        <ul className="grid h-full gap-x-4 gap-y-4 grid-cols-2 lg:grid-cols-4">
+        <ul className="grid h-full grid-cols-2 gap-x-4 gap-y-4 lg:grid-cols-4">
           {HomeFooterLinks.map(({ id, footLink }) => (
             <li
               key={id}
@@ -224,7 +269,9 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <h2 className="mt-4 font-semibold text-center">© 2024 Created by Nikhil Mhatre. All rights reserved.</h2>
+        <h2 className="mt-4 text-center font-semibold">
+          © 2024 Created by Nikhil Mhatre. All rights reserved.
+        </h2>
       </footer>
     </main>
   );
