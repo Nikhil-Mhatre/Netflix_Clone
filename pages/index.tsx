@@ -39,7 +39,7 @@ export default function Home() {
       const respo = await  axios.post(`/api/checkuser`, {
         email
       });
-      console.log(respo.data);
+      
       if(respo.data){
         router.push(`/auth?auth_type=login&input_email=${email}`)
       }else{

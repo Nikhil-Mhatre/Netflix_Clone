@@ -9,6 +9,7 @@ import InfoModal from '@/components/InfoModal';
 import useMovieList from '@/hooks/useMovieList';
 import useFavorites from '@/hooks/useFavorites';
 import useInfoModalStore from '@/hooks/useInfoModalStore';
+import useMovieTags from '@/hooks/useMovieTags';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -27,10 +28,15 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
+
 const Home = () => {
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorites();
   const {isOpen, closeModal} = useInfoModalStore();
+  const {data: popular = []} = useMovieTags("Popular on Netflix")
+  const {data: newRel = []} = useMovieTags("New Release")
+  const {data: awus = []} = useMovieTags("Award-wining US Crime TV Thrillers & Mystries")
+  
 
   return (
     <>
@@ -38,8 +44,10 @@ const Home = () => {
       <Navbar />
       <Billboard />
       <div className="pb-40">
-        <MovieList title="Trending Now" data={movies} />
+        <MovieList title="Popular on Netflix" data={popular} />
         <MovieList title="My List" data={favorites} />
+        <MovieList title="New Release" data={newRel} />
+        <MovieList title="Award-wining US Crime TV Thrillers & Mystries" data={awus} />
       </div>
     </>
   )
