@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 
 import Input from '@/components/Input';
+import { useSearchParams } from 'next/navigation';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -27,12 +28,14 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const Auth = () => {
   const router = useRouter();
-
-  const [email, setEmail] = useState('');
+  const searchParams = useSearchParams()
+  const auth_type = searchParams.get("auth_type")
+  const input_email = searchParams.get("input_email")  
+  const [email, setEmail] = useState(input_email ||'');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const [variant, setVariant] = useState('login');
+  const [variant, setVariant] = useState(auth_type ||'login');
 
   const toggleVariant = useCallback(() => {
     setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login');
@@ -68,7 +71,7 @@ const Auth = () => {
   }, [email, name, password, login]);
 
   return (
-    <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
+    <div className="relative h-screen w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <div className="bg-black w-full h-full lg:bg-opacity-50">
         <nav className="px-12 py-5">
           <img src="/images/logo.png" className="h-12" alt="Logo" />
@@ -110,7 +113,7 @@ const Auth = () => {
               <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
                 <FcGoogle size={32} />
               </div>
-              <div onClick={() => signIn('github', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
+              <div onClick={() => signIn('github', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
                 <FaGithub size={32} />
               </div>
             </div>

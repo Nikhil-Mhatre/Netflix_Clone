@@ -10,18 +10,43 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FAQITEMS, HomeFooterLinks } from "@/lib/contants";
+import { FAQITEMS, HomeFooterLinks } from "@/libs/constant";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import * as z from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type Val = { value: never };
+
 export default function Home() {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter()
+  const emailSchema = z.object({
+    email: z.string().email().min(5),
+  })
 
-  
+  const { register, handleSubmit, formState: { errors:emailErr } } = useForm({
+    resolver: zodResolver(emailSchema),
+  });
 
-  
+  interface FormValues {
+    email: string
+  }
+
+  const onSubmit:SubmitHandler<FormValues> = async(data)=>{
+      const {email} = data
+      const respo = await  axios.post(`/api/checkuser`, {
+        email
+      });
+      console.log(respo.data);
+      if(respo.data){
+        router.push(`/auth?auth_type=login&input_email=${email}`)
+      }else{
+        router.push(`/auth?auth_type=register&input_email=${email}`)    
+      }
+  }
+
 
   return (
     <main className="h-full scroll-smooth">
@@ -76,40 +101,44 @@ export default function Home() {
                 membership.
               </p>
 
-              {/* Hero btn */}
-              <div
-                className="flex w-full flex-col items-center gap-4 text-lg
-          md:w-6/12 md:flex-row md:justify-center md:text-xl lg:text-2xl"
-              >
-                <div className="relative w-full">
-                  <input
-                    ref={emailRef}
-                    type="text"
-                    id="hero-email"
-                    placeholder=" "
-                    className="peer w-full rounded-lg bg-gray-700
-                p-4 focus:outline-none"
-                  />
-                  <label
-                    htmlFor="hero-email"
-                    className="absolute left-4 top-4 origin-[0] -translate-y-3 
-                scale-75 transition ease-in-out peer-placeholder-shown:translate-y-0 
-                peer-placeholder-shown:scale-100 peer-focus:-translate-y-3 
-                peer-focus:scale-75"
-                  >
-                    Email Address
-                  </label>
-                </div>
-                <Link
-                  href={"#"}
-                  className="flex items-center gap-2 rounded-lg
-                bg-red-700 px-2 py-3 font-bold tracking-wider text-white md:py-4 md:text-lg"
-                >
-                  <span>Get</span>
-                  <span>Started</span>
-                  <IoIosArrowForward />
-                </Link>
-              </div>
+              {/* Hero btn */}         
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex w-full flex-col items-center gap-4 text-lg
+                  md:w-6/12 md:flex-row md:justify-center md:text-xl lg:text-2xl"
+                >                     
+                    <div className="relative w-full">
+                      <input
+                        {...register('email')}
+                        type="email"
+                        id="hero-email"
+                        placeholder=" "
+                        className={`peer w-full rounded-lg bg-gray-700 p-4 
+                        focus:outline-none ${emailErr.email && 'border-2 border-red-500'}`
+                        }
+                      />
+                      <label
+                        htmlFor="hero-email"
+                        className={`absolute text-gray-500 left-4 top-4 origin-[0] -translate-y-4 
+                          scale-75 transition ease-in-out peer-placeholder-shown:translate-y-0 
+                          peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 
+                          peer-focus:scale-75 ${emailErr.email && 'text-red-500'}`
+                      
+                    }
+                      >
+                        Email Address
+                      </label>
+                    </div>
+                    <button
+                      type="submit"
+                      className="flex items-center gap-2 rounded-lg
+                    bg-red-700 px-2 py-3 font-bold tracking-wider text-white md:py-4 md:text-lg"
+                    >
+                      <span>Get</span>
+                      <span>Started</span>
+                      <IoIosArrowForward />
+                    </button>
+                </form>
             </div>
           </div>
         </div>
