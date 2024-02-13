@@ -4,6 +4,14 @@
 
 This repository houses a full-stack Netflix clone built with modern technologies, aimed at showcasing web development skills and exploring complex project implementation.
 ##
+### Project Link : 
+```shell
+https://netflix-clone-rwkz.vercel.app
+```
+
+![netflix-clone-rwkz vercel app_browse](https://github.com/Nikhil-Mhatre/Netflix_Clone/assets/144405614/1f8d8651-9567-42e0-b291-0b0dae421538)
+
+
 ### Technologies Used:
 - `Programming Language`: 
     - `Typescript` 
