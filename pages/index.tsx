@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import Faq from "@/components/Faq";
 import Main from "@/components/Main";
 import Hero from "@/components/Hero";
-import Loader from "@/components/Loader";
 
 
 
