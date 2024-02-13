@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { IoIosArrowForward } from 'react-icons/io'
+import Loader from './Loader';
 
 function Hero() {
     const router = useRouter()
@@ -77,7 +78,6 @@ function Hero() {
                 Ready to watch? Enter your email to create or restart your
                 membership.
               </p>
-
               {/* Hero btn */}         
                 <form
                   onSubmit={handleSubmit(onSubmit)}
