@@ -8,6 +8,8 @@ import { FaGithub } from 'react-icons/fa';
 
 import Input from '@/components/Input';
 import { useSearchParams } from 'next/navigation';
+import { toast } from "sonner"
+
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -43,15 +45,17 @@ const Auth = () => {
 
   const login = useCallback(async () => {
     try {
-      await signIn('credentials', {
+     const response =  await signIn('credentials', {
         email,
         password,
         redirect: false,
         callbackUrl: '/'
       });
-
+      if(response?.error) throw new Error(response.error)      
+      toast.success("Successfully Login")
       router.push('/profiles');
     } catch (error) {
+      toast.error('Fails to sign Up')
       console.log(error);
     }
   }, [email, password, router]);
@@ -66,7 +70,8 @@ const Auth = () => {
 
       login();
     } catch (error) {
-        console.log(error);
+      toast.error(error?.response?.data?.error || 'Fails to sign Up')
+      console.log(error);
     }
   }, [email, name, password, login]);
 

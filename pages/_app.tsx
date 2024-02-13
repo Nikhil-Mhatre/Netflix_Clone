@@ -2,6 +2,8 @@ import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app'
 
 import '../styles/globals.css';
+import { Toaster  } from "@/components/ui/sonner"
+
 
 export default function App({ 
   Component, 
@@ -12,6 +14,7 @@ export default function App({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
+      <Toaster richColors position='top-right' /> 
         <Component {...pageProps} />
     </SessionProvider>
   )

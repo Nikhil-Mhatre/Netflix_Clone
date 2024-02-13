@@ -7,3 +7,8 @@ export interface MovieInterface {
   duration: string;
   genre: string;
 }
+
+
+export interface FieldValues {
+  email: string;
+}

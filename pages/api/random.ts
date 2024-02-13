@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const randomMovies = await prismadb.movie.findMany({
       take: 1,
-      skip: randomIndex
+      skip: randomIndex,
     });
 
     return res.status(200).json(randomMovies[0]);
