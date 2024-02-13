@@ -1,4 +1,4 @@
-# Netflix Clone - Net
+# Netflix Clone Built With NextJS, Tailwind CSS, MongoDB, Prisma
 
 #### <span style="color: #bdb333;">⚠️Disclaimer: This project is solely built for learning and portfolio purposes. It does not infringe on any copyrights or trademarks owned by Netflix, Inc.</span>
 
