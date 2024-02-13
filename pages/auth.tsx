@@ -70,7 +70,7 @@ const Auth = () => {
 
       login();
     } catch (error) {
-      toast.error(error?.response?.data?.error || 'Fails to sign Up')
+      toast.error('Fails to sign Up')
       console.log(error);
     }
   }, [email, name, password, login]);
