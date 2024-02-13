@@ -15,7 +15,7 @@ export default function Custom404() {
                 Lost Your Way?
             </h1>
             <p className="text-xl">
-                Sorry, we can&apos;t find that page. You'll find lots to explore on the home page
+                Sorry, we can&apos;t find that page. You&apos;ll find lots to explore on the home page
             </p>
             <button className="py-2 px-4 text-black bg-white rounded-lg hover:bg-gray-500 transition">
                 Netflix Home
