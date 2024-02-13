@@ -49,7 +49,7 @@ const Auth = () => {
         email,
         password,
         redirect: false,
-        callbackUrl: '/'
+        callbackUrl: '/profiles'
       });
       if(response?.error) throw new Error(response.error)      
       toast.success("Successfully Login")
